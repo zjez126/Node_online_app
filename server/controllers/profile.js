@@ -1,7 +1,6 @@
 const Profile = require('../models/Profile');
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require('../utils/errorResponse');
-const gravatar = require('gravatar');
 
 //测试接口
 exports.current = asyncHandler(async(req, res, next) => {
