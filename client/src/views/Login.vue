@@ -20,6 +20,7 @@
 <script>
 import InputGroup from '../components/InputGroup'
 import YButton from '../components/YButton'
+import jwt_decode from 'jwt-decode'
 export default {
     name: 'login',
     data() {
@@ -35,9 +36,40 @@ export default {
             //正则验证码邮箱
             var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
             if (!reg.test(this.user.email)) {
-                alert("请输入合法的邮箱地址！");
+                this.$message({
+                    center: true,
+                    message: '请输入合法的邮箱地址！',
+                    type: 'warning'
+                });
                 return;
             }
+            if (this.user.password.length < 8) {
+                this.$message({
+                    center: true,
+                    message: '密码长度为8位',
+                    type: 'warning'
+                });
+                return;
+            }
+            this.$axios.post("/api/user/login", this.user).then(res => {
+                console.log(res)
+                this.$message({
+                    center: true,
+                    message: '登录成功',
+                    type: 'success'
+                });
+                const {
+                    token
+                } = res.data
+                localStorage.setItem("wxToken", token);
+                //解析
+                const decode = jwt_decode(token);
+                console.log(decode)
+                //存储到vuex 中
+                this.$store.dispatch("setUser", decode)
+
+                this.$router.push('/')
+            })
         }
     },
     computed: {

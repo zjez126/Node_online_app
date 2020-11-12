@@ -10,8 +10,8 @@
                 <!--表单-->
                 <InputGroup label="昵称" placeholder="例如:吴亦凡" v-model="user.name" />
                 <InputGroup label="邮箱" placeholder="请填写邮箱" v-model="user.email" />
-                <InputGroup label="密码" placeholder="请填写密码" v-model="user.password" type="password" />
-                <InputGroup label="确认密码" placeholder="请确认密码" v-model="user.confirmPassword" type="password" />
+                <InputGroup label="密码" placeholder="请填写密码(8-16位)" v-model="user.password" type="password" />
+                <InputGroup label="确认密码" placeholder="请确认密码(8-16位)" v-model="user.confirmPassword" type="password" />
             </form>
             <div class="btn_wrap">
                 <YButton :disabled="isDisabled" @click="registerClick">注册</YButton>
@@ -30,9 +30,9 @@ export default {
     data() {
         return {
             user: {
-                name: '',
                 email: '',
                 password: '',
+                name: '',
                 confirmPassword: ''
             }
         }
@@ -42,12 +42,39 @@ export default {
             //正则验证码邮箱
             var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
             if (!reg.test(this.user.email)) {
-                alert("请输入合法的邮箱地址！");
+                this.$message({
+                    center: true,
+                    message: '请填写正确的邮箱',
+                    type: 'warning'
+                });
+                return;
+            }
+            if (this.user.password.length < 8) {
+                this.$message({
+                    center: true,
+                    message: '密码长度为8位',
+                    type: 'warning'
+                });
                 return;
             }
             if (this.user.password !== this.user.confirmPassword) {
-                alert("两次密码不一致!")
+                this.$message({
+                    center: true,
+                    message: '两次密码输入不一致',
+                    type: 'warning'
+                });
+                return;
             }
+
+            this.$axios.post("/api/user/register", this.user).then(res => {
+                console.log(res)
+                this.$message({
+                    center: true,
+                    message: '注册成功',
+                    type: 'success'
+                });
+                this.$router.push('/login')
+            })
 
         }
     },

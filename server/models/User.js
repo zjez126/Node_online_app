@@ -48,7 +48,7 @@ UserSchema.methods.matchPassword = function(pwd) {
 };
 //设置token
 UserSchema.methods.getSignedJwtToken = function() {
-    return jwt.sign({ id: this._id, name: this.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    return jwt.sign({ id: this._id, name: this.name, avatar: this.avatar }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
 }
 
 module.exports = mongoose.model("User", UserSchema)

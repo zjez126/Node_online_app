@@ -6,8 +6,13 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.current = asyncHandler(async(req, res, next) => {
     res.json({ success: true, data: req.user })
 });
-//创建朋友圈
 
+/*
+ * $route POST /api/profile/create
+ *  @desc   返回json数据
+ *  @access private
+ *  创建朋友圈
+ */
 exports.create = asyncHandler(async(req, res, next) => {
     const profilesFields = {}
     if (req.body.img && req.body.name && req.body.text) {
@@ -30,7 +35,13 @@ exports.create = asyncHandler(async(req, res, next) => {
 
 
 
-//下拉加载
+/*
+ * $route Get /api/profile/latest
+ *  @desc   返回json数据
+ *  @access private
+ *  下拉加载
+ */
+
 exports.latest = asyncHandler(async(req, res, next) => {
     Profile.find().sort({ createdAt: -1 }).then(data => {
         if (!data) {
@@ -46,7 +57,12 @@ exports.latest = asyncHandler(async(req, res, next) => {
     })
 })
 
-//上拉加载
+/*
+ * $route Get /api/profile/:page/:size
+ *  @desc   返回json数据
+ *  @access private
+ *  上拉加载
+ */
 exports.pullUp = asyncHandler(async(req, res, next) => {
     Profile.find().sort({ createdAt: -1 }).then(data => {
         if (!data) {

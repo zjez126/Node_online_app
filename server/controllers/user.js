@@ -4,8 +4,14 @@ const ErrorResponse = require('../utils/errorResponse');
 const gravatar = require('gravatar');
 
 //注册
+/*
+ * $route POST /api/user/register
+ *  @desc   返回json数据
+ *  @access public
+ */
 exports.register = asyncHandler(async(req, res, next) => {
-    const avatar = gravatar.url(req.body.avatar, { s: '200', r: 'pg', d: 'mm' });
+    const avatar = gravatar.url(req.body.email, { s: '200', r: 'pg', d: 'mm' });
+    console.log(req.body);
     await User.create({
         email: req.body.email,
         password: req.body.password,
@@ -14,11 +20,15 @@ exports.register = asyncHandler(async(req, res, next) => {
     }).then(data => {
         res.json({ success: true, data: data })
     }).catch(err => {
-        return next(new ErrorResponse("邮箱已存在", 400))
+        return next(new ErrorResponse("注册失败", 400))
     })
 })
 
-//登录
+/*
+ * $route POST /api/user/login
+ *  @desc   返回json数据
+ *  @access public
+ */
 
 exports.login = asyncHandler(async(req, res, next) => {
     const { email, password } = req.body;
@@ -41,8 +51,10 @@ exports.login = asyncHandler(async(req, res, next) => {
     res.json({ success: true, token })
 });
 
-//current
 
-exports.current = asyncHandler(async(req, res, next) => {
-    res.json({ success: true, data: req.user })
+exports.all = asyncHandler(async(req, res, next) => {
+    const user = await User.find();
+    if (user) {
+        res.json({ success: true, data: user })
+    }
 })
