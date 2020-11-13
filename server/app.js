@@ -15,9 +15,9 @@ const profile = require('./routes/api/profile')
 const PORT = process.env.PORT || 5000
 
 const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+// 使用body-parser中间件 限制上传文件的大小
+app.use(bodyParser.json({ limit: '5mb' }));
+app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
 //passport 初始化
 app.use(passport.initialize());
