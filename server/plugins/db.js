@@ -1,7 +1,7 @@
 module.exports = app => {
     const mongoose = require('mongoose');
     //连接mongodb数据库
-    mongoose.connect('mongodb+srv://root:CYH1314@cluster0.ia5pe.mongodb.net/MISS-YOU-ONLINE?retryWrites=true&w=majority', {
+    mongoose.connect('mongodb://localhost/test', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
