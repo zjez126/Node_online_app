@@ -2,10 +2,6 @@ const Profile = require('../models/Profile');
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require('../utils/errorResponse');
 
-//测试接口
-exports.current = asyncHandler(async(req, res, next) => {
-    res.json({ success: true, data: req.user })
-});
 
 /*
  * $route POST /api/profile/create

@@ -10,7 +10,7 @@
             </div>
             <!-- 中间 -->
             <div class="content_warp">
-                <Cell v-for="item in friendList" :key="item._id" :user="item" />
+                <Cell @click="cellClick(item)" v-for="item in friendList" :key="item._id" :user="item" />
             </div>
             <div class="count_wrap">
                 <span>{{friendList.length}}位联系人</span>
@@ -41,6 +41,11 @@ export default {
                 this.allFriendList = res.data.data;
             });
         },
+        cellClick(item) {
+            console.log(item)
+            this.$store.dispatch("setTargetUser", item)
+            this.$router.push('/information')
+        }
     },
     watch: {
         search_value() {

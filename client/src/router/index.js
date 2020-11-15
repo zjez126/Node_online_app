@@ -56,6 +56,18 @@ const routes = [{
         name: 'publish',
         component: () =>
             import ('../views/Publish.vue')
+    },
+    {
+        path: '/information',
+        name: 'information',
+        component: () =>
+            import ('../views/Information.vue')
+    },
+    {
+        path: '/chat',
+        name: 'chat',
+        component: () =>
+            import ('../views/ChatView.vue')
     }
 ]
 

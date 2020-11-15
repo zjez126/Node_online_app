@@ -10,6 +10,7 @@ dotenv.config({
 
 const user = require('./routes/api/user')
 const profile = require('./routes/api/profile')
+const message = require('./routes/api/message')
 
 
 const PORT = process.env.PORT || 5000
@@ -28,6 +29,7 @@ require('./middleware/passport')(passport)
 //设置路由中间件
 app.use("/api/user", user);
 app.use("/api/profile", profile);
+app.use("/api/msg", message);
 
 require('./plugins/db')(app)
 

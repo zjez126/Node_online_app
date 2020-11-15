@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require('../utils/errorResponse');
-const gravatar = require('gravatar');
 
 //注册
 /*
@@ -51,10 +50,21 @@ exports.login = asyncHandler(async(req, res, next) => {
     res.json({ success: true, token })
 });
 
-
+//获取所有用户信息
 exports.all = asyncHandler(async(req, res, next) => {
     const user = await User.find();
     if (user) {
         res.json({ success: true, data: user })
     }
+});
+//查找单个用户信息
+exports.getUser = asyncHandler(async(req, res, next) => {
+    // console.log(req.params.user_id)
+    await User.findById(req.params.user_id).then(user => {
+        if (!user) {
+            return next(new ErrorResponse("未找到该用户信息", 401));
+        }
+        res.json({ success: true, data: user })
+    })
+
 })

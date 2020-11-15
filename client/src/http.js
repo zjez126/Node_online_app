@@ -21,6 +21,7 @@ axios.interceptors.response.use(response => {
     console.log(error.response);
     const { status } = error.response;
     if (status == 401) {
+        Message.error("登录超时，请重新登录");
         localStorage.removeItem("wxToken")
         router.push('/login')
     }

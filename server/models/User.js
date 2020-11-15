@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const User = require('../../../../Node_Vue_Blog/serve/models/User');
 const UserSchema = mongoose.Schema({
     name: {
         type: String,
